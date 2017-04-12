@@ -27,19 +27,25 @@ protocol Mathematics {
 extension Double {
     var USD: Money {
         get {
-            return Money(amount: self, currency: "USD")
+            return Money(amount: Int(self), currency: "USD")
         }
     }
     
     var EUR: Money {
         get {
-            return Money(amount: self, currency: "EUR")
+            return Money(amount: Int(self), currency: "EUR")
         }
     }
     
     var GBP: Money {
         get {
-            return Money(amount: self, currency: "GBP")
+            return Money(amount: Int(self), currency: "GBP")
+        }
+    }
+    
+    var CAN: Money {
+        get {
+            return Money(amount: Int(self), currency: "CAN")
         }
     }
     
@@ -78,7 +84,7 @@ public struct Money: CustomStringConvertible, Mathematics {
         case Nil = "Nil"
     }
     
-    var amount: Double
+    var amount: Int
     var type: cType = cType.Nil
     var currency: String {
         get {
@@ -103,18 +109,18 @@ public struct Money: CustomStringConvertible, Mathematics {
     }
     
     
-    init(amount: Double, currency: String) {
+    init(amount: Int, currency: String) {
         self.amount = amount
         self.currency = currency
     }
     
-    init(amount: Double, currency: cType) {
+    init(amount: Int, currency: cType) {
         self.init(amount: amount, currency: currency.rawValue)
     }
     
     func convert(_ newC: String) -> Money {
         var nCur: cType = cType.Nil
-        var nAmount = 0.0
+        var nAmount = 0
         switch newC {
         case cType.USD.rawValue:
             nCur = cType.USD
@@ -138,8 +144,8 @@ public struct Money: CustomStringConvertible, Mathematics {
         return self.convert(newC.rawValue)
     }
     
-    func compute(Cur: cType, nCur: cType) -> Double! {
-        var value: Double? = nil
+    func compute(Cur: cType, nCur: cType) -> Int! {
+        var value: Int? = nil
         switch (Cur, nCur) {
         case (cType.USD, cType.GBP):
             value = amount / 2
