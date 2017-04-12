@@ -11,6 +11,43 @@ import Foundation
 print("Hello, World!")
 
 
+protocol CustomStringConvertible {
+    
+    var description: String { get }
+    
+}
+
+protocol Mathematics {
+    func add(_ to: Money) -> Money
+    
+    func subtract(_ from: Money) -> Money
+}
+
+
+extension Double {
+    var USD: Money {
+        get {
+            return Money(amount: self, currency: "USD")
+        }
+    }
+    
+    var EUR: Money {
+        get {
+            return Money(amount: self, currency: "EUR")
+        }
+    }
+    
+    var GBP: Money {
+        get {
+            return Money(amount: self, currency: "GBP")
+        }
+    }
+    
+}
+
+
+
+
 public func testMe() -> String {
     return "I have been tested"
 }
@@ -24,7 +61,14 @@ open class TestMe {
 ////////////////////////////////////
 // Money
 //
-public struct Money {
+public struct Money: CustomStringConvertible, Mathematics {
+    
+    var description: String {
+        get {
+            return "\(currency)\(amount)"
+        }
+    }
+
     //  Extra Credits
     enum cType: String {
         case USD = "USD"
@@ -34,7 +78,7 @@ public struct Money {
         case Nil = "Nil"
     }
     
-    var amount: Int
+    var amount: Double
     var type: cType = cType.Nil
     var currency: String {
         get {
@@ -59,18 +103,18 @@ public struct Money {
     }
     
     
-    init(amount: Int, currency: String) {
+    init(amount: Double, currency: String) {
         self.amount = amount
         self.currency = currency
     }
     
-    init(amount: Int, currency: cType) {
+    init(amount: Double, currency: cType) {
         self.init(amount: amount, currency: currency.rawValue)
     }
     
     func convert(_ newC: String) -> Money {
         var nCur: cType = cType.Nil
-        var nAmount = 0
+        var nAmount = 0.0
         switch newC {
         case cType.USD.rawValue:
             nCur = cType.USD
@@ -94,8 +138,8 @@ public struct Money {
         return self.convert(newC.rawValue)
     }
     
-    func compute(Cur: cType, nCur: cType) -> Int! {
-        var value: Int? = nil
+    func compute(Cur: cType, nCur: cType) -> Double! {
+        var value: Double? = nil
         switch (Cur, nCur) {
         case (cType.USD, cType.GBP):
             value = amount / 2
@@ -152,7 +196,21 @@ public struct Money {
 ////////////////////////////////////
 // Job
 //
-open class Job {
+open class Job:  CustomStringConvertible{
+    
+    var description: String {
+        get {
+            var str = ""
+            switch type {
+            case let .Hourly(value):
+                str = "\(value) per hour"
+            case let .Salary(value):
+                str = "\(value) per year"
+            }
+            return "Job: \(title), Salary: \(str)"
+        }
+    }
+
     fileprivate var title : String
     fileprivate var type : JobType
     
@@ -189,7 +247,14 @@ open class Job {
 ////////////////////////////////////
 // Person
 //
-open class Person {
+open class Person: CustomStringConvertible{
+    
+    var description: String {
+        get {
+            return self.toString()
+        }
+    }
+
     open var firstName : String = ""
     open var lastName : String = ""
     open var age : Int = 0
@@ -240,7 +305,18 @@ open class Person {
 ////////////////////////////////////
 // Family
 //
-open class Family {
+open class Family: CustomStringConvertible {
+    
+    var description: String {
+        get {
+            var str = ""
+            for member in members {
+                str += member.firstName + ", " + member.lastName + ", "
+            }
+            return "Members: \(str)Household Income: \(self.householdIncome)"
+        }
+    }
+
     fileprivate var members : [Person] = []
     
     public init(spouse1: Person, spouse2: Person) {
