@@ -28,6 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9DEFBBB91E9EE4A400774EF3"
+               BuildableName = "SimpleDomainModelTest.xctest"
+               BlueprintName = "SimpleDomainModelTest"
+               ReferencedContainer = "container:ExtDomainModel.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9DEFBBCC1E9EE62200774EF3"
+               BuildableName = "ExtDomainModelTest.xctest"
+               BlueprintName = "ExtDomainModelTest"
+               ReferencedContainer = "container:ExtDomainModel.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

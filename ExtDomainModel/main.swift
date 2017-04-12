@@ -193,7 +193,7 @@ public struct Money: CustomStringConvertible, Mathematics {
         if nMon.currency != from.currency {
             nMon = nMon.convert(from.currency)
         }
-        nMon.amount -= self.amount
+        nMon.amount -= from.amount
         return nMon
     }
     
@@ -317,9 +317,9 @@ open class Family: CustomStringConvertible {
         get {
             var str = ""
             for member in members {
-                str += member.firstName + ", " + member.lastName + ", "
+                str += member.firstName + " " + member.lastName + ", "
             }
-            return "Members: \(str)Household Income: \(self.householdIncome)"
+            return "Members: \(str)Household Income: \(self.householdIncome())"
         }
     }
 
@@ -349,5 +349,28 @@ open class Family: CustomStringConvertible {
         return income
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
